@@ -129,7 +129,7 @@ def evaluate_list(molecules, ensemble_lookup, options):
     # plot
     if options.plot:
         print(" Making plots ... ")
-        print
+        print()
         plotter(molecules, ensemble_lookup, options)
 
 
@@ -197,7 +197,7 @@ def error_check(options):
     ensemble_paths = options.ensemble_paths
 
     if compare and len(ensemble_paths) > 2:
-        print("\n Only 2 ensembles can be compared, {d} were specified\n".format(d=len(ensemble_paths)))
+        print(("\n Only 2 ensembles can be compared, {d} were specified\n".format(d=len(ensemble_paths))))
         sys.exit(1)
 
 
@@ -219,7 +219,7 @@ def plotter(molecules, ensemble_lookup, options):
         print("\n Plotting requires matplotlib to be installed\n")
         sys.exit(1)
 
-    for ensemble in ensemble_lookup.keys():
+    for ensemble in list(ensemble_lookup.keys()):
 
         # create figure
         fig = plt.figure()
@@ -302,13 +302,13 @@ def ReadFiles(options):
         try:
             ensemble_file = open(ensemble_path, 'r')
         except IOError:
-            print("\nUnable to open ensemble_list: {l}\n".format(l=ensemble_path))
+            print(("\nUnable to open ensemble_list: {l}\n".format(l=ensemble_path)))
             return 1
 
         ensemble_queries = [query.strip() for query in ensemble_file.read().split(',')]
         ensemble_file.close()
         if len(ensemble_queries) == 0 or '' in ensemble_queries:
-            print("\n{l} is empty\n".format(l=ensemble_path))
+            print(("\n{l} is empty\n".format(l=ensemble_path)))
             return 1
 
         key = os.path.basename(ensemble_path)
@@ -316,7 +316,7 @@ def ReadFiles(options):
 
     # Run consistency checks on the input csv
     uniq = []
-    for ensemble in ensemble_lookup.keys():
+    for ensemble in list(ensemble_lookup.keys()):
         for unique_query in [query for query in ensemble_lookup[ensemble] if query not in uniq]:
             uniq.append(unique_query)
 

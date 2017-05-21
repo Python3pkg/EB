@@ -25,7 +25,7 @@ def run(itf):
     print(" Reading input file ...")
     molecules = csv_interface.read_csv(os.path.abspath(options.inputpath), options)
     if not molecules:
-        print("\n '{f} was unable to be parsed\n".format(f=os.path.basename(options.inputpath)))
+        print(("\n '{f} was unable to be parsed\n".format(f=os.path.basename(options.inputpath))))
         sys.exit(1)
     approximator(molecules, options)
 

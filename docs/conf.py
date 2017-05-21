@@ -55,8 +55,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'EB'
-copyright = u'2015, Rob Swift'
+project = 'EB'
+copyright = '2015, Rob Swift'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -209,8 +209,8 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'EB.tex',
-     u'EB Documentation',
-     u'Rob Swift', 'manual'),
+     'EB Documentation',
+     'Rob Swift', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -240,8 +240,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'EB',
-     u'EB Documentation',
-     [u'Rob Swift'], 1)
+     'EB Documentation',
+     ['Rob Swift'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -255,8 +255,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'EB',
-     u'EB Documentation',
-     u'Rob Swift',
+     'EB Documentation',
+     'Rob Swift',
      'EB',
      'One line description of project.',
      'Miscellaneous'),

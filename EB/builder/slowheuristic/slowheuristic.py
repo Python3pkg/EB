@@ -27,7 +27,7 @@ def run(itf):
     print(" Reading input file ...")
     molecules = csv_interface.read_csv(os.path.abspath(options.inputpath), options)
     if not molecules:
-        print("\n '{f}' was unable to be parsed\n".format(f=os.path.abspath(options.inputpath)))
+        print(("\n '{f}' was unable to be parsed\n".format(f=os.path.abspath(options.inputpath))))
         sys.exit(1)
 
     if approximator(molecules, options) == 1:
@@ -52,7 +52,7 @@ def approximator(molecules, options, sort_order=None, frameworks=[], ensemble=[]
         sort_order = classification.get_sort_order(molecules)
 
     # construct ensemble
-    print("Performing calculations for ensemble size {s}".format(s=(len(ensemble) + 1)))
+    print(("Performing calculations for ensemble size {s}".format(s=(len(ensemble) + 1))))
     ensemble = rank_queries(molecules, ensemble, sort_order, options)
 
     # write stats & ensemble

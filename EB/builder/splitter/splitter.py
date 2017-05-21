@@ -49,7 +49,7 @@ def write_csv_header(mol, csv_writer):
     line.append('status')
 
     # query labels
-    queryList = mol.properties.keys()
+    queryList = list(mol.properties.keys())
     for queryLabel in queryList:
         line.append(queryLabel)
 
@@ -79,7 +79,7 @@ def write_csv_line(mol, csv_writer, options):
     line.append(mol.GetProp(status_field))
 
     # query labels
-    queryList = mol.properties.keys()
+    queryList = list(mol.properties.keys())
     for queryLabel in queryList:
         line.append(mol.properties[queryLabel])
 
@@ -129,7 +129,7 @@ def split(activeList, decoyList, options):
     # verify that there are enough molecules to satisfy the ratio
     if len(decoyList) < (len(activeList) * decoy_to_active):
         max = len(decoyList) / len(activeList)
-        print("\n The maximum decoy to active ratio the input file will support is {f} \n".format(f=max))
+        print(("\n The maximum decoy to active ratio the input file will support is {f} \n".format(f=max)))
         sys.exit(1)
 
     # randomly split the actives
@@ -137,7 +137,7 @@ def split(activeList, decoyList, options):
 
     trainIndex = []
     valIndex = []
-    trainIndex = random.sample(range(len(activeList)), trainsize)
+    trainIndex = random.sample(list(range(len(activeList))), trainsize)
     valIndex = [x for x in range(len(activeList)) if x not in trainIndex]
 
     trainactives = [activeList[index] for index in trainIndex]
@@ -149,7 +149,7 @@ def split(activeList, decoyList, options):
 
     trainIndex = []
     valIndex = []
-    trainIndex = random.sample(range(len(decoyList)), int(trainsize))
+    trainIndex = random.sample(list(range(len(decoyList))), int(trainsize))
     valIndex = [x for x in range(len(decoyList)) if x not in trainIndex][0:int(valsize)]
 
     traindecoys = [decoyList[index] for index in trainIndex]
@@ -200,7 +200,7 @@ def read_csv(csvfile, options):
         else:
             f = open(csvfile, 'rU')
     except IOError:
-        print(" \n '{f}' could not be opened\n".format(f=os.path.basename(csvfile)))
+        print((" \n '{f}' could not be opened\n".format(f=os.path.basename(csvfile))))
         sys.exit(1)
 
     # read file
@@ -219,7 +219,7 @@ def read_csv(csvfile, options):
             mol = read_line(line, options, prop_indices, mol)
             # if the line's junk, skip it
             if mol == 1:
-                print(" skipping molecule 'm'\n".format(m=(linenumber - 1)))
+                print((" skipping molecule 'm'\n".format(m=(linenumber - 1))))
             else:
                 molList.append(mol)
 
@@ -252,7 +252,7 @@ def read_line(csv_contents, options, prop_indices, mol):
         return 1
 
     # loop over property values
-    for prop_label in prop_indices.keys():
+    for prop_label in list(prop_indices.keys()):
         # get property value
         value_index = prop_indices[prop_label]
         prop_value = csv_contents[value_index]
@@ -276,7 +276,7 @@ def read_header(headerlabels, options):
     # confirm that status_field exists
     status_field_matcher = re.compile(status_field)
     if not any(x for x in headerlabels if status_field_matcher.match(x)):
-        print("\n The status_field column '{s}' doesn't exist\n".format(s=status_field))
+        print(("\n The status_field column '{s}' doesn't exist\n".format(s=status_field)))
         sys.exit(1)
 
     # initiate prop_column dictionary and csv column index

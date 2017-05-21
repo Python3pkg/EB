@@ -104,11 +104,11 @@ def write_summary(stats, options, fw_type = None):
 
     # sort the stats keys using the "decorate, sort, un decorate method"
     decorated = [(x, int(re.search(r'_([0-9]|[0-9][0-9]|[0-9][0-9][0-9])_queries.csv$', x, re.M).group().split('_')[1]))
-                 for x in stats.keys() if '_queries.csv' in x]
+                 for x in list(stats.keys()) if '_queries.csv' in x]
     decorated.sort(key=lambda element: element[1])
     sorted_stats_keys = [x[0] for x in decorated]
 
-    for leftovers in [x for x in stats.keys() if '_queries.csv' not in x]:
+    for leftovers in [x for x in list(stats.keys()) if '_queries.csv' not in x]:
         sorted_stats_keys.append(leftovers)
 
     for ensemble in sorted_stats_keys:

@@ -28,11 +28,11 @@ def find_best_ensemble(results, options):
     if ndecoys == n:
         # the user specified an fpf of 1, so wants the ensemble the maximizes the AUC, so sort on auc
         prop_key = 'auc'
-        sorted_list = sorted(results.items(), key = lambda x: x[1].get_prop(prop_key), reverse=True)
+        sorted_list = sorted(list(results.items()), key = lambda x: x[1].get_prop(prop_key), reverse=True)
     else:
         # the user is interested in an ensemble that maximizes an enrichment factor at some FPF
         prop_key = 'ef'
-        sorted_list = sorted(results.items(), key = lambda x: x[1].get_prop(ndecoys, prop_key), reverse=True)
+        sorted_list = sorted(list(results.items()), key = lambda x: x[1].get_prop(ndecoys, prop_key), reverse=True)
 
     # we only need to consider breaking a tie if there is more than one ensemble to consider
     if len(sorted_list) > 1:
@@ -52,14 +52,14 @@ def tie_break(sorted_list, results, prop_key, ndecoys):
 
     # Generate a list of the number of decoys that correspond to the FPF
     # values at which enrichment factors were determined, not including ndecoys, the training value
-    ndecoys_list = sorted([x for x in list(results.values())[0].ef.keys() if x != ndecoys])
+    ndecoys_list = sorted([x for x in list(list(results.values())[0].ef.keys()) if x != ndecoys])
 
     # break the tie the ensemble that maximizes the enrichment factor at a given FPF (that corresponds to ndecoys)
     if prop_key == 'ef':
         index = 0
         while index < len(ndecoys_list) and sorted_list[0][1].get_prop(ndecoys_list[index], prop_key) == \
                 sorted_list[1][1].get_prop(ndecoys_list[index], prop_key):
-            sorted_list = sorted(results.items(), key=lambda r: (r[1].get_prop(ndecoys, prop_key),
+            sorted_list = sorted(list(results.items()), key=lambda r: (r[1].get_prop(ndecoys, prop_key),
                                                                  r[1].get_prop(ndecoys_list[index], 'ef')),
                                  reverse=True)
             index += 1
@@ -68,7 +68,7 @@ def tie_break(sorted_list, results, prop_key, ndecoys):
         index = 0
         while sorted_list[0][1].get_prop(prop_key) == sorted_list[1][1].get_prop(prop_key) \
                 and index < len(ndecoys_list):
-            sorted_list = sorted(results.items(), key = lambda x: (x[1].get_prop(prop_key),
+            sorted_list = sorted(list(results.items()), key = lambda x: (x[1].get_prop(prop_key),
                                                                    x[1].get_prop(ndecoys_list[index])))
             index += 1
 

@@ -77,7 +77,7 @@ def calculate_acd(acd_structure, fpf):
         fw_smiles = mol[4]
         fw_dict[fw_smiles] += 1
 
-    fw_count = [x[1] for x in fw_dict.items()] # a list of the molecule count consistent with each unique framework
+    fw_count = [x[1] for x in list(fw_dict.items())] # a list of the molecule count consistent with each unique framework
     fw_count.sort(reverse=True)                # always sort from high to low s.t.: 1 >= ACD >= 0.5
 
     n_actives = len(acd_structure) # number of active molecules above the fpf threshold

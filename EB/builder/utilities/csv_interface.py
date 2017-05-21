@@ -19,7 +19,7 @@ def read_csv(csv_file, options, ensemble_list=None):
         else:
             f = open(csv_file, 'rU')
     except IOError:
-        print(" \n '{f}' could not be opened\n".format(f=os.path.basename(csv_file)))
+        print((" \n '{f}' could not be opened\n".format(f=os.path.basename(csv_file))))
         sys.exit(1)
 
 
@@ -41,7 +41,7 @@ def read_csv(csv_file, options, ensemble_list=None):
             else:
                 mol = read_line(line, options, prop_indices, mol)
             if mol == 1:
-                print(" skipping molecule {m}\n".format(m=(line_number - 1)))
+                print((" skipping molecule {m}\n".format(m=(line_number - 1))))
             else:
                 molList.append(mol)
         line_number += 1
@@ -73,27 +73,27 @@ def read_header(header_labels, options, ensemble_list=None):
         # verify that the input queries are in the inputfille
         if not [x for x in query_list if x in header_labels]:
             out = ' '.join(query_list)
-            print("\n '{q}' are not in '{e}'\n".format(q=out, e=os.path.basename(filename)))
+            print(("\n '{q}' are not in '{e}'\n".format(q=out, e=os.path.basename(filename))))
             sys.exit(1)
     else:
         score_field_matcher = re.compile(score_field)
         query_list = [x for x in header_labels if score_field_matcher.match(x)]
 
         if not query_list:
-            print("\n There are no '{s}' columns in '{c}'\n".format(s=score_field, c=os.path.basename(filename)))
+            print(("\n There are no '{s}' columns in '{c}'\n".format(s=score_field, c=os.path.basename(filename))))
             sys.exit(1)
 
         # confirm that there are a sufficient no. of queries to generate
         # the requested ensemble size
         if len(query_list) < ensemble_size:
-            print("\n '{s}' will support a maximum ensemble size of '{d}'\n".format(s=os.path.basename(filename),
-                                                                              d=len(query_list)))
+            print(("\n '{s}' will support a maximum ensemble size of '{d}'\n".format(s=os.path.basename(filename),
+                                                                              d=len(query_list))))
             sys.exit(1)
 
     # confirm that status field exists
     status_field_matcher = re.compile(status_field)
     if not any(x for x in header_labels if status_field_matcher.match(x)):
-        print("\n The status_field column '{s}' doesn't exist\n".format(s=status_field))
+        print(("\n The status_field column '{s}' doesn't exist\n".format(s=status_field)))
         sys.exit(1)
 
     # initiate prop_column dictionary and csv column index
@@ -132,7 +132,7 @@ def read_line(csv_contents, options, prop_indices, mol, ensemble_list=None):
     if ensemble_list:
         queryList = ensemble_list
     else:
-        queryList = [x for x in prop_indices.keys() if score_field in x]
+        queryList = [x for x in list(prop_indices.keys()) if score_field in x]
     for query in queryList:
         score_field_indices.append(prop_indices[query])
     for value in [csv_contents[x] for x in score_field_indices]:
@@ -141,7 +141,7 @@ def read_line(csv_contents, options, prop_indices, mol, ensemble_list=None):
             return 1
 
     # loop over property values
-    for label in prop_indices.keys():
+    for label in list(prop_indices.keys()):
 
         # get property value
         value_index = prop_indices[label]

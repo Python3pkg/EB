@@ -32,7 +32,7 @@ def run(itf):
     print(" Reading input file ...")
     molecules = csv_interface.read_csv(inputpath, options)
     if not molecules:
-        print("\n '{flag}' was unable to be parsed\n".format(flag=os.path.basename(options.inputpath)))
+        print(("\n '{flag}' was unable to be parsed\n".format(flag=os.path.basename(options.inputpath))))
         sys.exit(1)
 
     # determine the sort order & ensemble_size
@@ -75,7 +75,7 @@ def optimizor(molecules, sort_order, ensemble_size, options):
         ncpu = multiprocessing.cpu_count()
 
     if ncpu > 1:
-        print("Determining the performance of {d} ensembles using {n} processors".format(d=len(ensemble_list), n=ncpu))
+        print(("Determining the performance of {d} ensembles using {n} processors".format(d=len(ensemble_list), n=ncpu)))
 
         if ncpu > len(ensemble_list):
             ncpu = len(ensemble_list)
@@ -99,7 +99,7 @@ def optimizor(molecules, sort_order, ensemble_size, options):
             j.join()
 
     else:
-        print("Determining the performance of {d} ensembles using {n} processor".format(d=len(ensemble_list), n=ncpu))
+        print(("Determining the performance of {d} ensembles using {n} processor".format(d=len(ensemble_list), n=ncpu)))
         results = evaluate(molecules, ensemble_list, sort_order, options)
 
     # peel away the best performing ensemble
@@ -109,10 +109,10 @@ def optimizor(molecules, sort_order, ensemble_size, options):
     output.write_ensemble(list(ensemble), options)
 
     # temp 2/9/15 generate and return a list of auc values and ef at fpf = 0.001 to build up a histogram
-    nd = max([results[x].ef.keys() for x in results.keys()][0])
+    nd = max([list(results[x].ef.keys()) for x in list(results.keys())][0])
     n = int(round(0.001 * nd))
-    ef_list = [results[x].get_prop(n, 'ef') for x in results.keys()]
-    auc_list = [results[x].get_prop('auc') for x in results.keys()]
+    ef_list = [results[x].get_prop(n, 'ef') for x in list(results.keys())]
+    auc_list = [results[x].get_prop('auc') for x in list(results.keys())]
     # auc_list = [[results[x].get_prop('auc'), results[x].get_prop('ensemble')] for x in results.keys()]
     return auc_list, ef_list
 
@@ -169,7 +169,7 @@ def make_ensemble_list(molecules, score_field, ensemble_size):
 	"""
 
     # generate list of queries
-    queryList = molecules[0].scores.keys()
+    queryList = list(molecules[0].scores.keys())
 
     # nchoosek
     ensemble_iterator = itertools.combinations(queryList, ensemble_size)

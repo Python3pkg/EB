@@ -41,8 +41,8 @@ def main(argv=[__name__]):
     if len(argv) == 1 or argv[1] not in apps:
         print(help_string)
         for mode in app_names:
-            print("    %s\t  %s" % (mode, apps[mode][2]))
-        print
+            print(("    %s\t  %s" % (mode, apps[mode][2])))
+        print()
         return 1
 
     mode = argv[1]

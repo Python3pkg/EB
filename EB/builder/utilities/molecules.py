@@ -41,7 +41,7 @@ class Molecule:
 		"""
 
         if prop == 'scores':
-            return [x[1] for x in self.scores.items()]
+            return [x[1] for x in list(self.scores.items())]
         elif prop:
             if prop == 'id':
                 return self.id
@@ -51,9 +51,9 @@ class Molecule:
                 return self.bm
             elif prop == 'graph':
                 return self.graph
-            elif prop in self.scores.keys():
+            elif prop in list(self.scores.keys()):
                 return self.scores[prop]
-            elif prop in self.properties.keys():
+            elif prop in list(self.properties.keys()):
                 return self.properties[prop]
             else:
                 return None

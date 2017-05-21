@@ -1,6 +1,6 @@
 __author__ = 'robswift'
 
-import screener
+from . import screener
 
 def get_sort_order(molecules):
     """
@@ -93,7 +93,7 @@ def metric_calculator(tpf, fpf, P, N, metric_list, anal=True):
 
     for index in range(len(tpf)):
         # calculate and assign enrichment factors
-        if N * fpf[index] in metrics.keys() and N * fpf[index] > 0:
+        if N * fpf[index] in list(metrics.keys()) and N * fpf[index] > 0:
             ef = tpf[index] / fpf[index]
             metrics[N * fpf[index]][1] = ef
 
@@ -105,7 +105,7 @@ def metric_calculator(tpf, fpf, P, N, metric_list, anal=True):
 
     # reshape metrics dictionary, discarding the #_of_req_decoys, i.e: {'fpf',[value,low,high]}
     reshaped = {}
-    for k,v in metrics.iteritems():
+    for k,v in metrics.items():
             if type(v) is float or type(v) is int:
                 reshaped[k] = v
             else:
